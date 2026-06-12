@@ -13,7 +13,6 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BedPart;
@@ -122,28 +121,34 @@ public abstract class BuffBedTemplate extends HorizontalDirectionalBlock impleme
                                               @NotNull BlockState neighborState, @NotNull LevelAccessor level,
                                               @NotNull BlockPos currentPos, @NotNull BlockPos neighborPos) {
 
-        // 只在"配对方向"上的邻居变化时才检查
+        // 只在整体的其他方块变化时才检查
         if (neighborDir == getNeighbourDirection(state.getValue(PART), state.getValue(FACING))) {
-            // 邻居还是同款方块且 part 不同 → 一切正常
+            //  part 不同 → 一切正常
             if (neighborState.is(this) && neighborState.getValue(PART) != state.getValue(PART)) {
                 return state;
             }
-            // 邻居不在了或不是配对的半 → 自己也消失
+            // 同款方块不在了或不是配对的半 → 自己也消失
             return Blocks.AIR.defaultBlockState();
         }
         return super.updateShape(state, neighborDir, neighborState, level, currentPos, neighborPos);
     }
 
     @Override
-    public @NotNull BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-        // 1. 只在服务端 + 创造模式下才执行这个补丁
-        if (!level.isClientSide && player.isCreative()) {
-
-            level.setBlock(pos,Blocks.AIR.defaultBlockState(),35); // 35 是更新标志，表示：更新自己 + 更新邻居 + 通知客户端
-            level.levelEvent(player, 2001, pos, Block.getId(state)); // 2001 是方块破坏事件，客户端收到后会播放破坏粒子和音效
-
+    public @NotNull BlockState playerWillDestroy(Level level, @NotNull BlockPos pos, @NotNull BlockState state, @NotNull Player player) {
+        // 创造模式下，需要在邻居更新链触发之前手动破坏另一个半块
+        // 否则另一半会通过 updateShape -> updateOrDestroy -> destroyBlock 路径被间接破坏
+        // 而该路径不区分创造/生存模式，会导致创造模式也掉落物品
+        if (!level.isClientSide && player.isCreative()
+                //战利品表中定义了只有foot才会掉落,head即使间接破坏也不会掉落,因此只有当foot被间接破坏时才需要手动处理
+                &&state.getValue(PART).equals(BedPart.HEAD)) {
+            BlockPos otherPos = pos.relative(getNeighbourDirection(state.getValue(PART), state.getValue(FACING)));
+            BlockState otherState = level.getBlockState(otherPos);
+            // 如果另一半还存在且是配对半块，手动设为空气（flags=35 含 SUPPRESS_DROPS，不生掉落物）
+            if (otherState.is(this) && otherState.getValue(PART) != state.getValue(PART)) {
+                level.setBlock(otherPos, Blocks.AIR.defaultBlockState(), 35);
+                level.levelEvent(player, 2001, otherPos, Block.getId(otherState));
+            }
         }
-        // 最后调用父类，让正常的破坏流程继续
         return super.playerWillDestroy(level, pos, state, player);
 
     }
