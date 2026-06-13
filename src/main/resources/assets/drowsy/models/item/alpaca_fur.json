@@ -1,6 +1,7 @@
 {
 	"format_version": "1.9.0",
 	"credit": "Made with Blockbench",
+	"gui_light": "front",
 	"texture_size": [32, 32],
 	"textures": {
 		"2": "drowsy:item/alpaca_fur",

@@ -21,6 +21,8 @@ public class BedSleepListener {
     public static void onWakeUp(PlayerWakeUpEvent event){
         // 添加模组效果
         Player player = event.getEntity();
+        if (!player.isSleepingLongEnough())
+            return;
         player.getSleepingPos().ifPresent(
                 pos->{
                     Block block = player.level().getBlockState(pos).getBlock();
