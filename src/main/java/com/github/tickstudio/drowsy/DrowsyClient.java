@@ -1,5 +1,6 @@
 package com.github.tickstudio.drowsy;
 
+import com.github.tickstudio.drowsy.client.render.AlpacaBedRenderer;
 import com.github.tickstudio.drowsy.client.render.StrawMatRenderer;
 import com.github.tickstudio.drowsy.server.domain.DomainRegistry;
 import net.minecraft.client.Minecraft;
@@ -34,8 +35,12 @@ public class DrowsyClient {
     @SubscribeEvent
     static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(
-                DomainRegistry.STRAW_MAT_ENTITY.get(),      // BlockEntityType<StrawMatBlockEntity> — 要绑定渲染器的方块实体类型
-                StrawMatRenderer::new                // BlockEntityRendererProvider — 渲染器的构造方法引用
+                DomainRegistry.STRAW_MAT_ENTITY.get(),
+                StrawMatRenderer::new
+        );
+        event.registerBlockEntityRenderer(
+                DomainRegistry.ALPACA_BED_ENTITY.get(),
+                AlpacaBedRenderer::new
         );
     }
 

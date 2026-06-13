@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    { "item": "drowsy:alpaca_fur" }
+  ],
+  "result": {
+    "count": 1,
+    "id": "drowsy:alpaca_wool"
+  }
+}

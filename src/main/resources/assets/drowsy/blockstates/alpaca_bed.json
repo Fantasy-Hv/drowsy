@@ -1,0 +1,13 @@
+  {
+    "variants": {
+      "facing=north,part=foot": { "model": "drowsy:block/alpaca_bed" },
+      "facing=east,part=foot":  { "model": "drowsy:block/alpaca_bed"},
+      "facing=south,part=foot": { "model": "drowsy:block/alpaca_bed" },
+      "facing=west,part=foot":  { "model": "drowsy:block/alpaca_bed" },
+
+      "facing=north,part=head": { "model": "drowsy:block/alpaca_bed" },
+      "facing=east,part=head":  { "model": "drowsy:block/alpaca_bed"},
+      "facing=south,part=head": { "model": "drowsy:block/alpaca_bed" },
+      "facing=west,part=head":  { "model": "drowsy:block/alpaca_bed" }
+    }
+  }

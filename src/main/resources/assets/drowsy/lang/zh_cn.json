@@ -5,6 +5,8 @@
   "itemGroup.drowsy": "Drowsy",
   "block.drowsy.bed.occupied": "床已被占用" ,
   "block.drowsy.straw_mat": "草席",
-  "item.drowsy.bundle_grass": "草束"
-
+  "item.drowsy.bundle_grass": "草束",
+  "block.drowsy.alpaca_wool": "羊驼毛",
+  "block.drowsy.alpaca_bed": "羊驼床",
+  "item.drowsy.alpaca_fur": "羊驼毛皮"
 }

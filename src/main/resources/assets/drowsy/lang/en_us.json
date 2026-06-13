@@ -5,5 +5,8 @@
   "itemGroup.drowsy": "Drowsy",
   "block.drowsy.straw_mat": "straw mat",
   "item.drowsy.bundle_grass": "bundle grass",
-  "block.drowsy.bed.occupied": "bed occupied"
+  "block.drowsy.bed.occupied": "bed occupied",
+  "block.drowsy.alpaca_wool": "llama wool",
+  "block.drowsy.alpaca_bed": "llama bed",
+  "item.drowsy.alpaca_fur": "llama fur"
 }
