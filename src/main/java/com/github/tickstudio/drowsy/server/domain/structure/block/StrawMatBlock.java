@@ -1,6 +1,8 @@
-package com.github.tickstudio.drowsy.server.domain.block;
+package com.github.tickstudio.drowsy.server.domain.structure.block;
 
 import com.github.tickstudio.drowsy.TickUtils;
+import com.github.tickstudio.drowsy.server.domain.structure.blockentity.StrawMatBlockEntity;
+import com.github.tickstudio.drowsy.server.domain.structure.base.BuffBedTemplate;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;

@@ -1,4 +1,4 @@
-package com.github.tickstudio.drowsy.server.domain.block;
+package com.github.tickstudio.drowsy.server.domain.structure.blockentity;
 
 import com.github.tickstudio.drowsy.server.domain.DomainRegistry;
 import net.minecraft.core.BlockPos;

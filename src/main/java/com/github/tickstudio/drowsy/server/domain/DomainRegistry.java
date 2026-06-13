@@ -1,10 +1,10 @@
 package com.github.tickstudio.drowsy.server.domain;
 
 import com.github.tickstudio.drowsy.Drowsy;
-import com.github.tickstudio.drowsy.server.domain.block.AlpacaBedBlock;
-import com.github.tickstudio.drowsy.server.domain.block.AlpacaBedBlockEntity;
-import com.github.tickstudio.drowsy.server.domain.block.StrawMatBlock;
-import com.github.tickstudio.drowsy.server.domain.block.StrawMatBlockEntity;
+import com.github.tickstudio.drowsy.server.domain.structure.block.AlpacaBedBlock;
+import com.github.tickstudio.drowsy.server.domain.structure.blockentity.AlpacaBedBlockEntity;
+import com.github.tickstudio.drowsy.server.domain.structure.block.StrawMatBlock;
+import com.github.tickstudio.drowsy.server.domain.structure.blockentity.StrawMatBlockEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -105,20 +105,28 @@ public class DomainRegistry {
     // 创造模式标签页 注册表
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
-    public static final Supplier<CreativeModeTab> BEDS = CREATIVE_MODE_TABS.register(
-            "drowsy_bed",
+    public static final Supplier<CreativeModeTab> TAB_BEDS = CREATIVE_MODE_TABS.register(
+            "drowsy_tab_bed",
             ()->CreativeModeTab.builder()
-                    .title(Component.translatable("itemGroup.drowsy"))
-                    .icon(() -> new ItemStack(STRAW_MAT_ITEM.get()))
+                    .title(Component.translatable("itemGroup.drowsy.bed"))
+                    .icon(() -> new ItemStack(ALPACA_BED_ITEM.get()))
                     .displayItems((parameters, output) -> {
                         //用 accept 把 物品 添加到标签页里
                         output.accept(STRAW_MAT_ITEM.get());
                         output.accept(ALPACA_BED_ITEM.get());
+                    })
+                    .build()
+    );
+    public static final Supplier<CreativeModeTab> TAB_ITEMS = CREATIVE_MODE_TABS.register(
+            "drowsy_tab_item",
+            ()->CreativeModeTab.builder()
+                    .title(Component.translatable("itemGroup.drowsy.item"))
+                    .icon(()->new ItemStack(BUNDLE_GRASS.get()))
+                    .displayItems((parameters, output) -> {
                         output.accept(ALPACA_WOOL_ITEM.get());
                         output.accept(BUNDLE_GRASS.get());
                         output.accept(ALPACA_FUR_ITEM.get());
                     })
-
                     .build()
     );
     public static void registerDomain(IEventBus modEventBus){

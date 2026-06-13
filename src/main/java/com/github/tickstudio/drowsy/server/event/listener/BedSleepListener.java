@@ -1,6 +1,6 @@
 package com.github.tickstudio.drowsy.server.event.listener;
 
-import com.github.tickstudio.drowsy.server.domain.block.BuffBed;
+import com.github.tickstudio.drowsy.server.domain.structure.base.BuffBed;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;

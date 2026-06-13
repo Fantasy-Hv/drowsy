@@ -1,7 +1,7 @@
 package com.github.tickstudio.drowsy.client.render;
 
-import com.github.tickstudio.drowsy.server.domain.block.StrawMatBlock;
-import com.github.tickstudio.drowsy.server.domain.block.StrawMatBlockEntity;
+import com.github.tickstudio.drowsy.server.domain.structure.block.StrawMatBlock;
+import com.github.tickstudio.drowsy.server.domain.structure.blockentity.StrawMatBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.SheetedDecalTextureGenerator;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -21,6 +21,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.BlockDestructionProgress;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.level.block.state.properties.BedPart;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -75,6 +76,28 @@ public class StrawMatRenderer implements BlockEntityRenderer<StrawMatBlockEntity
     }
 
     public StrawMatRenderer(BlockEntityRendererProvider.Context context) {
+    }
+
+    /**
+     * 返回此方块实体的渲染包围盒，用于视锥体裁剪判断。
+     * <p>
+     * 草席模型是跨两格的完整几何体，只在 FOOT 位置渲染一次。
+     * 默认包围盒只覆盖当前 BlockPos 一格，导致 FOOT 离开视野时
+     * 即使 HEAD 在视野内，整个模型也会被裁剪。
+     * <p>
+     * 这里将包围盒扩展到同时覆盖 FOOT 和 HEAD 两格，
+     * 保证只要任意一半在视野内，渲染器就会被调用。
+     */
+    @Override
+    public @NotNull AABB getRenderBoundingBox(StrawMatBlockEntity blockEntity) {
+        BlockState state = blockEntity.getBlockState();
+        BedPart part = state.getValue(StrawMatBlock.PART);
+        Direction facing = state.getValue(StrawMatBlock.FACING);
+        // 计算配对方块的方向：foot→facing，head→facing.getOpposite()
+        Direction neighborDir = (part == BedPart.FOOT) ? facing : facing.getOpposite();
+        BlockPos neighborPos = blockEntity.getBlockPos().relative(neighborDir);
+        // minmax 返回能同时容纳当前方块和配对方块的最小 AABB
+        return new AABB(blockEntity.getBlockPos()).minmax(new AABB(neighborPos));
     }
 
     /**

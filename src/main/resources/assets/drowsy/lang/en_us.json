@@ -3,6 +3,8 @@
   "drowsy.configuration.section.drowsy.common.toml": "Drowsy Configs",
   "drowsy.configuration.section.drowsy.common.toml.title": "Drowsy Configs",
   "itemGroup.drowsy": "Drowsy",
+  "itemGroup.drowsy.bed": "Drowsy | bed",
+  "itemGroup.drowsy.item": "Drowsy | item",
   "block.drowsy.straw_mat": "straw mat",
   "item.drowsy.bundle_grass": "bundle grass",
   "block.drowsy.bed.occupied": "bed occupied",

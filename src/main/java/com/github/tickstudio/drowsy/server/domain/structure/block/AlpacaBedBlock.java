@@ -1,6 +1,9 @@
-package com.github.tickstudio.drowsy.server.domain.block;
+package com.github.tickstudio.drowsy.server.domain.structure.block;
 
 import com.github.tickstudio.drowsy.TickUtils;
+import com.github.tickstudio.drowsy.server.domain.structure.blockentity.AlpacaBedBlockEntity;
+import com.github.tickstudio.drowsy.server.domain.structure.base.BuffBed;
+import com.github.tickstudio.drowsy.server.domain.structure.base.BuffBedTemplate;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
@@ -35,7 +38,8 @@ public class AlpacaBedBlock extends BuffBedTemplate implements EntityBlock {
      * 是因为 Minecraft 的效果注册表采用 Holder 包装，
      * 这样可以支持数据包（datapack）对效果的重定义/替换。
      */
-    Holder<MobEffect> effect = MobEffects.REGENERATION;
+    Holder<MobEffect> effectLuck = MobEffects.LUCK;
+    Holder<MobEffect> effectDamageBoost = MobEffects.DAMAGE_BOOST;
 
     /**
      * 方块序列化编解码器。
@@ -78,7 +82,8 @@ public class AlpacaBedBlock extends BuffBedTemplate implements EntityBlock {
      */
     @Override
     public ImmutableSet<MobEffectInstance> getEffects() {
-        return ImmutableSet.of(new MobEffectInstance(effect, TickUtils.sec2tick(60)));
+        return ImmutableSet.of(new MobEffectInstance(effectLuck, TickUtils.sec2tick(180))
+                ,new MobEffectInstance(effectDamageBoost,TickUtils.sec2tick(180)));
     }
 
     /**

@@ -1,4 +1,4 @@
-package com.github.tickstudio.drowsy.server.domain.block;
+package com.github.tickstudio.drowsy.server.domain.structure.base;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

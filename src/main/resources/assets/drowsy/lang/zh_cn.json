@@ -3,6 +3,8 @@
   "drowsy.configuration.section.drowsy.common.toml": "Drowsy 配置",
   "drowsy.configuration.section.drowsy.common.toml.title": "Drowsy 配置",
   "itemGroup.drowsy": "Drowsy",
+  "itemGroup.drowsy.bed": "Drowsy | 床",
+  "itemGroup.drowsy.item": "Drowsy | 物品",
   "block.drowsy.bed.occupied": "床已被占用" ,
   "block.drowsy.straw_mat": "草席",
   "item.drowsy.bundle_grass": "草束",
